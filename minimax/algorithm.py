@@ -37,7 +37,7 @@ def minimax(position, depth, max_player, game):
 
 
 def simulate_move(piece, move, board, game, skip):
-    board.move(piece, move[0], move[1])
+    board.move_pieces(piece, move[0], move[1])
 
     if skip:
         board.remove(skip)
@@ -49,11 +49,12 @@ def get_all_moves(board, color, game):
     moves = []
 
     for piece in board.get_all_pieces(color):
-        logical_moves = board.get_valid_moves(piece)
+        logical_moves = board.get_logical_moves(piece)
 
-        for move, skip in logical_moves.item():
+        for move, skip in logical_moves.items():
             temp_board = deepcopy(board)
-            new_board = simulate_move(piece, move, temp_board, game, skip)
+            temp_piece = temp_board.get_pieces(piece.board_row, piece.board_column)
+            new_board = simulate_move(temp_piece, move, temp_board, game, skip)
             moves.append(new_board)
 
     return moves

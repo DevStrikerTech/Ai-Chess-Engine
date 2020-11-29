@@ -1,6 +1,7 @@
 import pygame
-from chess.variable_declaration import board_width, board_height, board_square_size, black_piece
+from chess.variable_declaration import board_width, board_height, board_square_size, black_piece, white_piece
 from chess.rules import Rules
+from minimax.algorithm import minimax
 
 # Initialising display
 FPS: int = 60
@@ -24,6 +25,10 @@ def main():
 
     while start_chess_engine:
         runtime.tick(FPS)
+
+        if game_rules.turn_taken == white_piece:
+            value, new_board = minimax(game_rules.get_board(), 3, white_piece, game_rules)
+            game_rules.algorithm_move(new_board)
 
         if game_rules.winner() is not None:
             print(game_rules.winner())
