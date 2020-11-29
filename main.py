@@ -12,7 +12,11 @@ def main():
 
     while start_chess_engine:
         runtime.tick(FPS)
-        pass
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                start_chess_engine = False
+    pygame.quit()
 
 
 main()
