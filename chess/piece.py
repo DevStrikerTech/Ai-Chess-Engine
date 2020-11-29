@@ -11,13 +11,7 @@ class Piece:
         self.board_row = board_row
         self.board_column = board_column
         self.piece_color = piece_color
-        self.piece_king = True
-
-        # Chess piece position check by piece color
-        if self.piece_color == black_piece:
-            self.piece_direction = -1
-        else:
-            self.piece_direction = 1
+        self.piece_king = False
 
         self.x = 0
         self.y = 0

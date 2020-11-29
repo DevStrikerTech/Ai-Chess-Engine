@@ -1,5 +1,5 @@
 import pygame
-from .variable_declaration import board_white_square, board_rows, board_brown_square, board_square_size, board_columns,\
+from .variable_declaration import board_white_square, board_rows, board_brown_square, board_square_size, board_columns, \
     white_piece, black_piece
 from .piece import Piece
 
@@ -7,7 +7,6 @@ from .piece import Piece
 class Board:
     def __init__(self):
         self.board = []
-        self.current_piece = None
         self.black_piece_left = self.white_piece_left = 12
         self.black_piece_kings = self.white_piece_kings = 0
         self.create_board()
@@ -57,3 +56,93 @@ class Board:
                 chess_piece = self.board[board_row][board_column]
                 if chess_piece != 0:
                     chess_piece.draw_pieces(window)
+
+    def get_logical_moves(self, piece):
+        moves = {}
+        left = piece.board_column - 1
+        right = piece.board_column + 1
+        row = piece.board_row
+
+        if piece.piece_color == black_piece or piece.piece_king:
+            moves.update(self._traverse_left(row - 1, max(row - 3, -1), -1, piece.piece_color, left))
+            moves.update(self._traverse_right(row - 1, max(row - 3, -1), -1, piece.piece_color, right))
+
+        if piece.piece_color == white_piece or piece.piece_king:
+            moves.update(self._traverse_left(row + 1, min(row + 3, board_rows), 1, piece.piece_color, left))
+            moves.update(self._traverse_right(row + 1, min(row + 3, board_rows), 1, piece.piece_color, right))
+
+        return moves
+
+    def _traverse_left(self, start, stop, step, color, left, skipped=[]):
+        moves = {}
+        last = []
+
+        for index in range(start, stop, step):
+            if left < 0:
+                break
+
+            current = self.board[index][left]
+            if current == 0:
+                if skipped and not last:
+                    break
+                elif skipped:
+                    moves[(index, left)] = last + skipped
+                else:
+                    moves[(index, left)] = last
+
+                if last:
+                    if step == -1:
+                        board_row = max(index - 3, 0)
+                    else:
+                        board_row = min(index + 3, board_rows)
+
+                    moves.update(self._traverse_left(index + step, board_row, step, color, left - 1, skipped=last))
+                    moves.update(self._traverse_right(index + step, board_row, step, color, left + 1, skipped=last))
+                break
+
+            elif current.color == color:
+                break
+
+            else:
+                last = [current]
+
+            left -= 1
+
+        return moves
+
+    def _traverse_right(self, start, stop, step, color, right, skipped=[]):
+        moves = {}
+        last = []
+
+        for index in range(start, stop, step):
+            if right > board_columns:
+                break
+
+            current = self.board[index][right]
+            if current == 0:
+                if skipped and not last:
+                    break
+                elif skipped:
+                    moves[(index, right)] = last + skipped
+                else:
+                    moves[(index, right)] = last
+
+                if last:
+                    if step == -1:
+                        board_row = max(index - 3, 0)
+                    else:
+                        board_row = min(index + 3, board_rows)
+
+                    moves.update(self._traverse_left(index + step, board_row, step, color, right - 1, skipped=last))
+                    moves.update(self._traverse_right(index + step, board_row, step, color, right + 1, skipped=last))
+                break
+
+            elif current.color == color:
+                break
+
+            else:
+                last = [current]
+
+            right += 1
+
+        return moves

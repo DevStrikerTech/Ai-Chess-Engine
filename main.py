@@ -1,6 +1,6 @@
 import pygame
-from chess.variable_declaration import board_width, board_height, board_square_size
-from chess.board import Board
+from chess.variable_declaration import board_width, board_height, board_square_size, black_piece
+from chess.rules import Rules
 
 # Initialising display
 FPS: int = 60
@@ -20,7 +20,7 @@ def get_board_row_col_from_mouse(position):
 def main():
     start_chess_engine = True
     runtime = pygame.time.Clock()
-    chess_board = Board()
+    game_rules = Rules(window)
 
     while start_chess_engine:
         runtime.tick(FPS)
@@ -32,11 +32,11 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 position = pygame.mouse.get_pos()
                 board_row, board_column = get_board_row_col_from_mouse(position)
-                piece = chess_board.get_pieces(board_row, board_column)
-                chess_board.move_pieces(piece, 4, 3)
 
-        chess_board.draw_pieces(window)
-        pygame.display.update()
+                if game_rules.turn_taken == black_piece:
+                    game_rules.select(board_row, board_column)
+
+        game_rules.update()
 
     pygame.quit()
 
