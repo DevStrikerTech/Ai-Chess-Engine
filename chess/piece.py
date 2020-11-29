@@ -1,5 +1,5 @@
 import pygame
-from .variable_declaration import black_piece, white_piece, board_square_size
+from .variable_declaration import black_piece, white_piece, board_square_size, highlight_piece_grey
 
 
 class Piece:
@@ -32,4 +32,8 @@ class Piece:
 
     def draw(self, window):
         radius = board_square_size // 2 - self.padding
+        pygame.draw.circle(window, highlight_piece_grey, (self.x, self.y), radius + self.outline)
         pygame.draw.circle(window, self.piece_color, (self.x, self.y), radius)
+
+    def __repr__(self):
+        return str(self.piece_color)
