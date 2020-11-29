@@ -14,3 +14,6 @@ black_piece = (0, 0, 0)
 white_piece = (255, 182, 193)
 position_piece = (0, 0, 255)
 highlight_piece_grey = (128, 128, 128)
+
+# Loading image and resize
+crown_image = pygame.transform.scale(pygame.image.load('assets/crown.png'), (44, 25))

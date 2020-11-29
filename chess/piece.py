@@ -1,5 +1,5 @@
 import pygame
-from .variable_declaration import black_piece, white_piece, board_square_size, highlight_piece_grey
+from .variable_declaration import black_piece, white_piece, board_square_size, highlight_piece_grey, crown_image
 
 
 class Piece:
@@ -11,7 +11,7 @@ class Piece:
         self.board_row = board_row
         self.board_column = board_column
         self.piece_color = piece_color
-        self.piece_king = False
+        self.piece_king = True
 
         # Chess piece position check by piece color
         if self.piece_color == black_piece:
@@ -34,6 +34,10 @@ class Piece:
         radius = board_square_size // 2 - self.padding
         pygame.draw.circle(window, highlight_piece_grey, (self.x, self.y), radius + self.outline)
         pygame.draw.circle(window, self.piece_color, (self.x, self.y), radius)
+
+        # adding image to king pieces
+        if self.piece_king:
+            window.blit(crown_image, (self.x - crown_image.get_width() // 2, self.y - crown_image.get_height() // 2))
 
     def __repr__(self):
         return str(self.piece_color)
