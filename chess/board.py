@@ -20,6 +20,22 @@ class Board:
                                                               board_column * board_square_size,
                                                               board_square_size, board_square_size))
 
+    def move_pieces(self, piece, board_row, board_column):
+        self.board[piece.board_row][piece.board_column], self.board[board_row][board_column] = \
+            self.board[board_row][board_column], self.board[piece.board_row][piece.board_column]
+        piece.move_pieces(board_row, board_column)
+
+        if board_row == board_rows or board_row == 0:
+            piece.make_king()
+
+            if piece.piece_color == white_piece:
+                self.white_piece_kings += 1
+            else:
+                self.black_piece_kings += 1
+
+    def get_pieces(self, board_row, board_column):
+        return self.board[board_row][board_column]
+
     def create_board(self):
         for board_row in range(board_rows):
             self.board.append([])
@@ -34,10 +50,10 @@ class Board:
                 else:
                     self.board[board_row].append(0)
 
-    def draw(self, window):
+    def draw_pieces(self, window):
         self.draw_squares(window)
         for board_row in range(board_rows):
             for board_column in range(board_columns):
                 chess_piece = self.board[board_row][board_column]
                 if chess_piece != 0:
-                    chess_piece.draw(window)
+                    chess_piece.draw_pieces(window)

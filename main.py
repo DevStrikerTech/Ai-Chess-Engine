@@ -14,6 +14,9 @@ def main():
     runtime = pygame.time.Clock()
     chess_board = Board()
 
+    piece = chess_board.get_pieces(0, 1)
+    chess_board.move_pieces(piece, 4, 3)
+
     while start_chess_engine:
         runtime.tick(FPS)
 
@@ -24,7 +27,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pass
 
-        chess_board.draw(window)
+        chess_board.draw_pieces(window)
         pygame.display.update()
 
     pygame.quit()

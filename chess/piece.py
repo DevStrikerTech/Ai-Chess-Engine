@@ -30,7 +30,7 @@ class Piece:
     def make_king(self):
         self.piece_king = True
 
-    def draw(self, window):
+    def draw_pieces(self, window):
         radius = board_square_size // 2 - self.padding
         pygame.draw.circle(window, highlight_piece_grey, (self.x, self.y), radius + self.outline)
         pygame.draw.circle(window, self.piece_color, (self.x, self.y), radius)
@@ -38,6 +38,11 @@ class Piece:
         # adding image to king pieces
         if self.piece_king:
             window.blit(crown_image, (self.x - crown_image.get_width() // 2, self.y - crown_image.get_height() // 2))
+
+    def move_pieces(self, board_row, board_column):
+        self.board_row = board_row
+        self.board_column = board_column
+        self.calculate_piece_position()
 
     def __repr__(self):
         return str(self.piece_color)
