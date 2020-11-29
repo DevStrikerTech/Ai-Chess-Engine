@@ -4,7 +4,7 @@ from .variable_declaration import black_piece, white_piece, board_square_size, h
 
 class Piece:
     # Inner padding for chess pieces
-    padding: int = 10
+    padding: int = 15
     outline: int = 2
 
     def __init__(self, board_row, board_column, piece_color):
