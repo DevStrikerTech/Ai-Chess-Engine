@@ -16,6 +16,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 start_chess_engine = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pass
+
     pygame.quit()
 
 
