@@ -23,6 +23,15 @@ class Board:
         return self.white_piece_left - self.black_piece_left + \
                (self.white_piece_kings * 0.5 - self.black_piece_kings * 0.5)
 
+    def get_all_pieces(self, piece_color):
+        pieces = []
+        for row in self.board:
+            for piece in row:
+                if piece != 0 and piece.piece_color == piece_color:
+                    pieces.append(piece)
+
+        return pieces
+
     def move_pieces(self, piece, board_row, board_column):
         self.board[piece.board_row][piece.board_column], self.board[board_row][board_column] = \
             self.board[board_row][board_column], self.board[piece.board_row][piece.board_column]
