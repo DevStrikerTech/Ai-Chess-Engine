@@ -25,6 +25,10 @@ def main():
     while start_chess_engine:
         runtime.tick(FPS)
 
+        if game_rules.winner() != None:
+            print(game_rules.winner())
+            start_chess_engine = False
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 start_chess_engine = False
@@ -32,9 +36,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 position = pygame.mouse.get_pos()
                 board_row, board_column = get_board_row_col_from_mouse(position)
-
-                if game_rules.turn_taken == black_piece:
-                    game_rules.select(board_row, board_column)
+                game_rules.select(board_row, board_column)
 
         game_rules.update()
 

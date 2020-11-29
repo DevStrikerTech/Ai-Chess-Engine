@@ -19,6 +19,9 @@ class Rules:
         self.turn_taken = black_piece
         self.logical_moves = {}
 
+    def winner(self):
+        return self.chess_board.winner()
+
     def reset(self):
         self._init()
 
@@ -29,13 +32,13 @@ class Rules:
             if not result:
                 self.current_piece = None
                 self.select(board_row, board_column)
-        else:
-            piece = self.chess_board.get_pieces(board_row, board_column)
 
-            if piece != 0 and piece.piece_color == self.turn_taken:
-                self.current_piece = piece
-                self.logical_moves = self.chess_board.get_logical_moves(piece)
-                return True
+        piece = self.chess_board.get_pieces(board_row, board_column)
+
+        if piece != 0 and piece.piece_color == self.turn_taken:
+            self.current_piece = piece
+            self.logical_moves = self.chess_board.get_logical_moves(piece)
+            return True
 
         return False
 
@@ -44,7 +47,13 @@ class Rules:
 
         if self.current_piece and piece == 0 and (board_row, board_column) in self.logical_moves:
             self.chess_board.move_pieces(self.current_piece, board_row, board_column)
+            skipped = self.logical_moves[(board_row, board_column)]
+
+            if skipped:
+                self.chess_board.remove(skipped)
+
             self.change_turn()
+
         else:
             return False
 
@@ -58,6 +67,8 @@ class Rules:
                                 row * board_square_size + board_square_size // 2), 15)
 
     def change_turn(self):
+        self.logical_moves = {}
+
         if self.turn_taken == black_piece:
             self.turn_taken = white_piece
         else:
