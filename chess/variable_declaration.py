@@ -11,5 +11,5 @@ board_white_square = (220, 211, 234)
 
 # Initialising chessboard pieces color
 black_piece = (0, 0, 0)
-white_piece = (255, 255, 255)
+white_piece = (255, 182, 193)
 position_piece = (0, 0, 255)
