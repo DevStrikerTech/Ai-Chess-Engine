@@ -19,6 +19,10 @@ class Board:
                                                               board_column * board_square_size,
                                                               board_square_size, board_square_size))
 
+    def evaluate(self):
+        return self.white_piece_left - self.black_piece_left + \
+               (self.white_piece_kings * 0.5 - self.black_piece_kings * 0.5)
+
     def move_pieces(self, piece, board_row, board_column):
         self.board[piece.board_row][piece.board_column], self.board[board_row][board_column] = \
             self.board[board_row][board_column], self.board[piece.board_row][piece.board_column]
