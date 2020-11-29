@@ -52,7 +52,7 @@ def get_all_moves(board, color, game):
         logical_moves = board.get_logical_moves(piece)
 
         for move, skip in logical_moves.items():
-            draw_moves(game, board, piece)
+            # draw_moves(game, board, piece)
             temp_board = deepcopy(board)
             temp_piece = temp_board.get_pieces(piece.board_row, piece.board_column)
             new_board = simulate_move(temp_piece, move, temp_board, game, skip)
@@ -61,10 +61,10 @@ def get_all_moves(board, color, game):
     return moves
 
 
-def draw_moves(game, board, piece):
-    logical_moves = board.get_logical_moves(piece)
-    board.draw_pieces(game.window)
-    pygame.draw.circle(game.window, (0, 255, 0), (piece.x, piece.y), 50, 5)
-    game.draw_valid_moves(logical_moves.keys())
-    pygame.display.update()
+# def draw_moves(game, board, piece):
+#     logical_moves = board.get_logical_moves(piece)
+#     board.draw_pieces(game.window)
+#     pygame.draw.circle(game.window, (0, 255, 0), (piece.x, piece.y), 50, 5)
+#     game.draw_valid_moves(logical_moves.keys())
+#     pygame.display.update()
     # pygame.time.delay(100)
