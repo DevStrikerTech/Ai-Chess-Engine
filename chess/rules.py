@@ -73,3 +73,10 @@ class Rules:
             self.turn_taken = white_piece
         else:
             self.turn_taken = black_piece
+
+    def get_board(self):
+        return self.chess_board
+
+    def algorithm_move(self, chess_board):
+        self.chess_board = chess_board
+        self.change_turn()
