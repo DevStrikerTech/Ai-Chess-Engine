@@ -25,7 +25,7 @@ def main():
     while start_chess_engine:
         runtime.tick(FPS)
 
-        if game_rules.winner() != None:
+        if game_rules.winner() is not None:
             print(game_rules.winner())
             start_chess_engine = False
 
